@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class ListIngredients {
-  ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+
+ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
   // Constructor
   public ListIngredients() {
@@ -39,6 +40,8 @@ public class ListIngredients {
       if (ingredients.get(i).name.equals(name)) {
         System.out.println(ingredients.get(i).name + " " + ingredients.get(i).unit + " " + ingredients.get(i).value
             + " " + ingredients.get(i).price);
+
+            // make a toString()
       }
     }
   }
@@ -52,4 +55,12 @@ public class ListIngredients {
     }
     return;
   }
+    // Calculate total cost of recipe.
+    public int getTotalCost() {
+      int sum = 0;
+      for (int i = 0; i < ingredients.size(); i++) {
+        sum += ingredients.get(i).price;
+      }
+      return sum;
+    }
 }

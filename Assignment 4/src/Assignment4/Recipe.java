@@ -6,9 +6,9 @@ import java.util.List;
 public class Recipe {
   String name;
   int portions;
-  ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+  ListIngredients ingredients = new ListIngredients();
   ArrayList<Double> amounts = new ArrayList<Double>();
-  ArrayList<String> comments = new ArrayList<String>();
+  String comment;
   String instruction;
   int totalCost;
 
@@ -26,16 +26,18 @@ public class Recipe {
   }
 
   public void addIngredient(Ingredient ingredient) {
-    ingredients.add(ingredient);
+    ingredients.addIngredient(ingredient);
   }
 
+  public void addComment(String comment) {
+    this.comment = comment;
+  }
 
-// Calculate total cost of recipe.
-  public void calculatePrice() {
-    int sum = 0;
-    for(int i = 0; i < ingredients.size(); i++) {
-      sum += ingredients.get(i).price;
-    }
-    totalCost = sum;
+  public void addInstructions(String instruction) {
+    this.instruction = instruction;
+  }
+
+  public String toString() {
+    return String.format("Portions %d; Comment: %s; totalCost: %d", portions, comment, ingredients.getTotalCost());
   }
 }

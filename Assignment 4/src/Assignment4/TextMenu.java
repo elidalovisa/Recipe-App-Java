@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TextMenu {
 
   ListIngredients ingredients;
-  Recipe recipe;
+  ArrayList<Recipe> recipe = new ArrayList<Recipe>();
 
   public TextMenu() {
     ingredients = new ListIngredients();
@@ -113,6 +114,14 @@ public class TextMenu {
     // Calculate total cost for recipe after all ingredients are added.
     recipe.calculatePrice();
 
+    System.out.println("Add comments");
+    String comment = scanner.nextLine();
+    recipe.addComment(comment);
+
+    System.out.println("Add instructions");
+    String instruction = scanner.nextLine();
+    recipe.addInstructions(instruction);
+
     // System.out.println("Name of ingredient");
     // String ingredientName = scanner.nextLine();
     // ingredients.checkIfNameExist(ingredientName);
@@ -127,5 +136,19 @@ public class TextMenu {
     // Add comments
     // Add total price
 
+  }
+
+  private void showRecipe(Scanner scanner) {
+    System.out.println("Here are all recipes. Write number what you want see");
+    // Print list with all recipes.
+    for (int i = 0; i < recipe.size(); i++) {
+      System.out.printf("%d %s", i, recipe.get(i));
+    }
+    int num = scanner.nextInt();
+    if (num >= recipe.size()) {
+      // Add error handeling
+    }
+    var showRecipe = recipe.get(num);
+    System.out.println(showRecipe.toString());
   }
 }
