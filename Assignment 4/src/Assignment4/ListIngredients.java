@@ -34,7 +34,7 @@ public class ListIngredients {
   }
 
   // Iterate and return all ingredients.
-  public void getAllIngredients(String name) {
+  public void getIngredient(String name) {
     for (int i = 0; i < this.ingredients.size(); i++) {
       if (ingredients.get(i).name.equals(name)) {
         System.out.println(ingredients.get(i).name + " " + ingredients.get(i).unit + " " + ingredients.get(i).value

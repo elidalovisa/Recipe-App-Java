@@ -27,7 +27,8 @@ public class TextMenu {
 
         case 1: // To add ingredient
           // ingredients.addIngredient();
-          addIngredientsMenu(scanner);
+          var ingredient = addIngredientsMenu(scanner);
+          ingredients.addIngredient(ingredient);
           // scanner.close();
           // MainMenu();
           break;
@@ -44,7 +45,7 @@ public class TextMenu {
     scanner.close();
   }
 
-  private void addIngredientsMenu(Scanner scanner) {
+  private Ingredient addIngredientsMenu(Scanner scanner) {
     System.out.println("What ingredient do you want to add?");
     scanner.nextLine();
     String name = scanner.nextLine();
@@ -63,8 +64,8 @@ public class TextMenu {
 
     // Create a new ingredient
     Ingredient ingredient = new Ingredient(name, unit, value, price);
-    ingredients.addIngredient(ingredient);
     System.out.println("Ingredient added.");
+    return ingredient;
   }
 
   private void listAllIngredients(Scanner scanner) {
@@ -76,7 +77,7 @@ public class TextMenu {
     System.out.println("Please write ingredient name to show details and/or remove ingredient.");
     scanner.nextLine();
     String name = scanner.nextLine();
-    ingredients.getAllIngredients(name);
+    ingredients.getIngredient(name);
 
     System.out.println("Press 0 to remove ingredient.");
     System.out.println("Press 1 to keep ingredient.");
@@ -91,14 +92,33 @@ public class TextMenu {
     System.out.println("Add recipe name");
     scanner.nextLine();
     String name = scanner.nextLine();
-    // Check if name already exist.
-    /*
-     * while (ingredients.checkIfNameExist(name)) {
-     * System.out.println("Ingredient already exist, type an other one."); name =
-     * scanner.nextLine(); }
-     */
+    Recipe recipe = new Recipe(name);
+
     System.out.println("How many portions?");
     int portions = scanner.nextInt();
+
+    recipe.setPortions(portions);
+
+    System.out.println("Add ingredients to the recipe. Press 1 to add recipe and 0 to stop adding ingredients.");
+
+    boolean addIngredientToRecipe = true;
+    while (addIngredientToRecipe) {
+      var ingredient = addIngredientsMenu(scanner);
+      recipe.addIngredient(ingredient);
+      int stop = scanner.nextInt();
+      if (stop == 0) {
+        addIngredientToRecipe = false;
+      }
+    }
+
+    // System.out.println("Name of ingredient");
+    // String ingredientName = scanner.nextLine();
+    // ingredients.checkIfNameExist(ingredientName);
+    // System.out.println("Unit");
+    // String unit = scanner.nextLine();
+    // System.out.println("Amount");
+    // double amount = scanner.nextDouble();
+    // String instructions = scanner.nextLine();
 
     // Add ingredients (list)
     // Add amount of each ingredient
