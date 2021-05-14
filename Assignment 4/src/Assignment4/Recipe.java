@@ -1,15 +1,16 @@
 package Assignment4;
 
+import java.util.List;
+
 public class Recipe {
   String name;
-  String time;
-  
-  Ingredient Ingredient; 
+  int portions;
+  List<Ingredient> ingredients;
+  List<Double> amounts;
+  List<String> comments;
+  String instruction;
+
+// Constructor
+public Recipe(String name, int portions, List<Ingredient> ingredients, List<Double> amounts, String instructions) {
 }
-
-// Constructor method 
-public Recipe(String name, ingriedient ingrideint)
-
-public static void main(String[] args) {
-  Recipie firstRecipie = new Recipe(greekSallad, tomato);
 }
