@@ -110,6 +110,8 @@ public class TextMenu {
         addIngredientToRecipe = false;
       }
     }
+    // Calculate total cost for recipe after all ingredients are added.
+    recipe.calculatePrice();
 
     // System.out.println("Name of ingredient");
     // String ingredientName = scanner.nextLine();

@@ -10,6 +10,7 @@ public class Recipe {
   ArrayList<Double> amounts = new ArrayList<Double>();
   ArrayList<String> comments = new ArrayList<String>();
   String instruction;
+  int totalCost;
 
   // Constructor for name
   public Recipe(String name) {
@@ -26,5 +27,15 @@ public class Recipe {
 
   public void addIngredient(Ingredient ingredient) {
     ingredients.add(ingredient);
+  }
+
+
+// Calculate total cost of recipe.
+  public void calculatePrice() {
+    int sum = 0;
+    for(int i = 0; i < ingredients.size(); i++) {
+      sum += ingredients.get(i).price;
+    }
+    totalCost = sum;
   }
 }
