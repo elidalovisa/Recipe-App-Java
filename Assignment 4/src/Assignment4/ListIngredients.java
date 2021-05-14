@@ -1,13 +1,13 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public class ListIngredients {
-  List<Ingredient> ingredients;
+  ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
   // Constructor
   public ListIngredients() {
-
+    //ingredients = new ArrayList<Ingredient>());
   }
-  
+
   // Add ingredient and check so name is unique.
   public int addIngredient(Ingredient ingredient) {
 
@@ -16,7 +16,16 @@ public class ListIngredients {
         return -1;
       }
     }
-    this.ingredients.add(ingredient);
+    ingredients.add(ingredient);
     return 0;
+  }
+
+  public boolean checkIfNameExist(String name) {
+    for (int i = 0; i < this.ingredients.size(); i++) {
+      if (ingredients.get(i).name == name) {
+        return true;
+      }
+    }
+    return false;
   }
 }
