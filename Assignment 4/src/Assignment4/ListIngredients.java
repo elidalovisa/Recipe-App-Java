@@ -3,11 +3,10 @@ import java.util.stream.Collectors;
 
 public class ListIngredients {
 
-ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
+  ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
   // Constructor
   public ListIngredients() {
-    // ingredients = new ArrayList<Ingredient>());
   }
 
   // Add ingredient and check so name is unique.
@@ -34,33 +33,56 @@ ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
     return ingredients.stream().map(s -> s.name).collect(Collectors.toCollection(ArrayList<String>::new));
   }
 
-  // Iterate and return all ingredients.
+  // Iterate and return selected ingredient.
   public void getIngredient(String name) {
     for (int i = 0; i < this.ingredients.size(); i++) {
       if (ingredients.get(i).name.equals(name)) {
         System.out.println(ingredients.get(i).name + " " + ingredients.get(i).unit + " " + ingredients.get(i).value
             + " " + ingredients.get(i).price);
-
-            // make a toString()
+        // make a toString()
       }
     }
   }
 
+  public String toString() {
+    StringBuilder str = new StringBuilder();
+    if (!this.ingredients.isEmpty()) { // If there is no ingredients return empty string.
+      str.append(this.ingredients.get(0));
+    }
+    for (int i = 0; i < this.ingredients.size(); i++) {
+      str.append(" ");
+      str.append(ingredients.get(i).name);
+      str.append(" ");
+      str.append(ingredients.get(i).value);
+      str.append(ingredients.get(i).unit);
+      str.append(" ");
+      str.append("Price:" + ingredients.get(i).price);
+    }
+    return str.toString();
+  }
+
+  /*
+   * String.format("%s; Unit: %d; %d; Price: %d", ingredients.get(i).name + " " +
+   * ingredients.get(i).unit + " " + ingredients.get(i).value+ " " +
+   * ingredients.get(i).price);
+   */
+
   public void removeIngredient(String name) {
     for (int i = 0; i < this.ingredients.size(); i++) {
       if (ingredients.get(i).name.equals(name)) {
-      ingredients.remove(ingredients.get(i));
+        ingredients.remove(ingredients.get(i));
         return; // return true and false
       }
     }
     return;
   }
-    // Calculate total cost of recipe.
-    public int getTotalCost() {
-      int sum = 0;
-      for (int i = 0; i < ingredients.size(); i++) {
-        sum += ingredients.get(i).price;
-      }
-      return sum;
+
+  // Calculate total cost of recipe.
+  public int getTotalCost() {
+    int sum = 0;
+    for (int i = 0; i < ingredients.size(); i++) {
+      sum += ingredients.get(i).price;
     }
+    return sum;
+  }
 }

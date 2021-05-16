@@ -1,4 +1,4 @@
-package Assignment4;
+//package Assignment4;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,6 @@ public class Recipe {
   }
 
   public String toString() {
-    return String.format("Portions %d; Comment: %s; totalCost: %d", portions, comment, ingredients.getTotalCost());
+    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, ingredients.getTotalCost());
   }
 }

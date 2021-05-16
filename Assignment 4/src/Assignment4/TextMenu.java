@@ -15,10 +15,14 @@ public class TextMenu {
 
     var run = true;
     while (run) {
-      System.out.println("Hello welcome!");
+      System.out.println("______________________");
+      System.out.println(" ");
+      System.out.println("Press 0 to exit program");
       System.out.println("Press 1 to add ingredient");
       System.out.println("Press 2 to list all ingredients");
-      System.out.println("Press 0 to exit program");
+      System.out.println("Press 3 to add recipe");
+      System.out.println("Press 4 to show all recipes and select one recipe.");
+      System.out.println("______________________");
       int choice = scanner.nextInt();
       switch (choice) {
         case 0:
@@ -34,8 +38,16 @@ public class TextMenu {
           // MainMenu();
           break;
 
-        case 2: // Lista ll ingredients
+        case 2: // List all ingredients
           listAllIngredients(scanner);
+          break;
+
+        case 3: // List all recipes
+          addRecipeMenu(scanner);
+          break;
+
+        case 4: // List all recipes
+          showRecipe(scanner);
           break;
 
         default:
@@ -53,6 +65,29 @@ public class TextMenu {
     // Check if name already exist.
     while (ingredients.checkIfNameExist(name)) {
       System.out.println("Ingredient already exist, type an other one.");
+      name = scanner.nextLine();
+    }
+
+    System.out.println("What unit");
+    String unit = scanner.nextLine();
+    System.out.println("How much?");
+    double value = scanner.nextDouble();
+    System.out.println("Whats the price");
+    Double price = scanner.nextDouble();
+
+    // Create a new ingredient
+    Ingredient ingredient = new Ingredient(name, unit, value, price);
+    System.out.println("Ingredient added.");
+    return ingredient;
+  }
+
+  private Ingredient addIngredientsToRecipe(Scanner scanner) {
+    System.out.println("What ingredient do you want to add?");
+    scanner.nextLine();
+    String name = scanner.nextLine();
+    // Check if ingredient exist.
+    while (!ingredients.checkIfNameExist(name)) {
+      System.out.println("Ingredient missing.");
       name = scanner.nextLine();
     }
 
@@ -99,12 +134,14 @@ public class TextMenu {
     int portions = scanner.nextInt();
 
     recipe.setPortions(portions);
-
-    System.out.println("Add ingredients to the recipe. Press 1 to add recipe and 0 to stop adding ingredients.");
+    System.out.println("______________________");
+    System.out.println(" ");
+    System.out.println("Press 1 to add ingredients to recipe" + "\n" + "Press 0 to stop adding ingredients.");
+    System.out.println("______________________");
 
     boolean addIngredientToRecipe = true;
     while (addIngredientToRecipe) {
-      var ingredient = addIngredientsMenu(scanner);
+      var ingredient = addIngredientsToRecipe(scanner);
       recipe.addIngredient(ingredient);
       int stop = scanner.nextInt();
       if (stop == 0) {
@@ -112,37 +149,27 @@ public class TextMenu {
       }
     }
     // Calculate total cost for recipe after all ingredients are added.
-    recipe.calculatePrice();
+    ingredients.getTotalCost();
+
+    System.out.println("Add instructions");
+    scanner.nextLine();
+    String instruction = scanner.nextLine();
+    recipe.addInstructions(instruction);
+    
 
     System.out.println("Add comments");
     String comment = scanner.nextLine();
     recipe.addComment(comment);
-
-    System.out.println("Add instructions");
-    String instruction = scanner.nextLine();
-    recipe.addInstructions(instruction);
-
-    // System.out.println("Name of ingredient");
-    // String ingredientName = scanner.nextLine();
-    // ingredients.checkIfNameExist(ingredientName);
-    // System.out.println("Unit");
-    // String unit = scanner.nextLine();
-    // System.out.println("Amount");
-    // double amount = scanner.nextDouble();
-    // String instructions = scanner.nextLine();
-
-    // Add ingredients (list)
-    // Add amount of each ingredient
-    // Add comments
-    // Add total price
-
+  
+    System.out.println("Recipe added.");
+    System.out.println(recipe);
   }
 
   private void showRecipe(Scanner scanner) {
     System.out.println("Here are all recipes. Write number what you want see");
     // Print list with all recipes.
     for (int i = 0; i < recipe.size(); i++) {
-      System.out.printf("%d %s", i, recipe.get(i));
+      System.out.printf("%d %s", i, recipe.get(i).name);
     }
     int num = scanner.nextInt();
     if (num >= recipe.size()) {
