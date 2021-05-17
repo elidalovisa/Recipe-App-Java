@@ -7,12 +7,13 @@ public class ListIngredients {
   ArrayList<Double> portionCost = new ArrayList<Double>(); // Array to store portion cost.
   ArrayList<Double> portionValue = new ArrayList<Double>(); // Array to store value of each ingredient.
   ArrayList<Double> onePortion = new ArrayList<Double>(); // Array to store one portion.
-  ArrayList<Double> wholePortions = new ArrayList<Double>(); 
+  ArrayList<Double> wholePortions = new ArrayList<Double>();
 
   ArrayList<String> portionsForRecipe = new ArrayList<String>(); // Array to store wanted portions for a recipe.
   ArrayList<Double> onePortionPrice = new ArrayList<Double>(); // Array to store price per ingredient for 1 portion.
-  ArrayList<Double> wantedPortionsPrice = new ArrayList<Double>(); // Array to store price per ingredient for wanted portions.
-  ArrayList<String> recipeToReturn = new ArrayList<String>(); 
+  ArrayList<Double> wantedPortionsPrice = new ArrayList<Double>(); // Array to store price per ingredient for wanted
+                                                                   // portions.
+  ArrayList<String> recipeToReturn = new ArrayList<String>();
 
   // Constructor
   public ListIngredients() {
@@ -77,62 +78,18 @@ public class ListIngredients {
     return result;
   }
 
-  // Iterate and return value of each ingredient.
-  public ArrayList<String> updatePortions(int number, ArrayList<Double> ingredientsValue, double wantedPortions, double actualPortions, ArrayList<Double> pricePerIngredient, String name, String instruction, String comment) {
-    for (int i = 0; i < number; i++) {
-      // Find out how much is needed for 1 portion
-      onePortion.add(ingredients.get(i).value / actualPortions);
+  // Calculate amount and price of ingredients after amount of portions.
+  public void calculateIng(int wantedPortions) {
+    for (int i = 0; i < this.ingredients.size(); i++) {
+      ingredients.get(i).value = ingredients.get(i).value / ingredients.get(i).value;
+      Math.ceil(ingredients.get(i).value);
+      ingredients.get(i).price = ingredients.get(i).price / ingredients.size();
     }
-
-    for (int i = 0; i < number; i++) {
-      // Find out how much is needed for 1 portion
-      wholePortions.add(onePortion.get(i) * wantedPortions);
-      Math.round(wholePortions.get(i));
-    }
-
-    for (int j = 0; j < number; j++) {
-      // Find out how much is needed for wanted portions
-      portionsForRecipe.add(ingredients.get(j).name + " " + wholePortions.get(j) + " " + ingredients.get(j).unit);
-      //  Math.round(portionsForRecipe.get(j));
-    }
-    
-    for (int k = 0; k < number; k++) {
-      // Find out what each ingredient cost for 1 portion.
-      onePortionPrice.add(pricePerIngredient.get(k) / actualPortions);
-    }
-
-    double sum = 0;
-    for (int l = 0; l < number; l++) {
-      // Find out what each ingredient cost for wanted portion.
-      wantedPortionsPrice.add(pricePerIngredient.get(l) * actualPortions);
-      sum += wantedPortionsPrice.get(l);
-    }
-
-
-    for (int m = 0; m < number; m++) {
-      recipeToReturn.add("Name of Recipe: " + name + " " + ingredients.get(m).name + " " + portionsForRecipe.get(m) + " " + ingredients.get(m).unit + " " + "Instructions: " + instruction + " " + comment + "Total price: " + sum);
-    }
-
-
-   
-   // System.out.println(onePortion);
-   // System.out.println(onePortionPrice);
-  // System.out.println(wantedPortionsPrice);
-  //  System.out.println(portionsForRecipe);
-    return recipeToReturn;
-  }
-
-public void calculateIng(int wantedPortions) {
-  for(int i = 0; i < this.ingredients.size(); i++) {
-    ingredients.get(i).value = ingredients.get(i).value / ingredients.get(i).value;
-    ingredients.get(i).price = ingredients.get(i).price / ingredients.size();
-    }
-    for(int j = 0; j < this.ingredients.size(); j++) {
+    for (int j = 0; j < this.ingredients.size(); j++) {
       ingredients.get(j).value = ingredients.get(j).value * wantedPortions;
       ingredients.get(j).price = ingredients.get(j).price * wantedPortions;
-      }
-      
-}
+    }
+  }
 
   public String toString() {
     StringBuilder str = new StringBuilder();
@@ -169,16 +126,5 @@ public void calculateIng(int wantedPortions) {
       sum += ingredients.get(i).price;
     }
     return sum;
-  }
-
-  // Update ingredients after portions.
-  public void updateIngredients(double wantedPortions) {
-    double result;
-    for (int i = 0; i < ingredients.size(); i++) {
-      // find out how much is needed for 1 portion
-      double onePortion = ingredients.get(i).value / ingredients.get(i).value;
-      // result = this.ingredients.get(i).value / wantedPortions;
-      System.out.println(this.ingredients.get(i).value);
-    }
   }
 }

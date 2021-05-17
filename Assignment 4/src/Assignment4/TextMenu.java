@@ -22,6 +22,8 @@ public class TextMenu {
       System.out.println("Press 2 to list all ingredients");
       System.out.println("Press 3 to add recipe");
       System.out.println("Press 4 to show all recipes and select one recipe.");
+      System.out.println("Press 5 to delete a recipe");
+
       System.out.println("______________________");
       int choice = scanner.nextInt();
       switch (choice) {
@@ -45,6 +47,10 @@ public class TextMenu {
 
         case 4: // List all recipes
           showRecipe(scanner);
+          break;
+
+          case 5: // Delete a recip5
+          removeRecipe(scanner);
           break;
 
         default:
@@ -182,29 +188,30 @@ public class TextMenu {
   public void getRecipe(String name, int wantedPortions) {
     for (int i = 0; i < recipe.size(); i++) {
       if (recipe.get(i).name.equals(name)) {
-        double actualPortions = recipe.get(i).portions;
         recipe.get(i).portions = wantedPortions;
-
-        int number = recipe.get(i).ingredients.numberOfIngredients(); // Find out how many ingredients there is in the
-        recipe.get(i).ingredients.getValue(number); // Get value of each ingredient.
-
         recipe.get(i).calculateIngredients(wantedPortions);
         System.out.println(recipe.get(i));
-        
-        var pricePerIngredient = recipe.get(i).ingredients.getPrice(number);
-        var instruction = recipe.get(i).instruction;
-        var comment = recipe.get(i).instruction;
-       //System.out.println(recipe.get(i).ingredients.updatePortions(number, ingredientsValue, wantedPortions, actualPortions pricePerIngredient, name, instruction, comment));
-
-
-        // return array with updated value and change value in existing array?
-
-        // Check if actual and wanted protions diff.
-        // if (actualPortions < wantedPortions || actualPortions > wantedPortions) {
-
-        // }
 
       }
     }
+  }
+
+  public void removeRecipe(Scanner scanner) {
+    System.out.println("List of all recipes:");
+    // Print list with all recipes.
+    for (int i = 0; i < recipe.size(); i++) {
+      System.out.println(recipe.get(i).name + "\n");
+    }
+    System.out.println("Write the name of the recipe that you would like delete.");
+    scanner.nextLine();
+    String name = scanner.nextLine();
+    for (int i = 0; i < recipe.size(); i++) {
+      if (recipe.get(i).name.equals(name)) {
+        recipe.remove(recipe.get(i));
+        System.out.println("Recipe " + name + " deleted.");
+        return; // return true and false
+      }
+    }
+    return;
   }
 }
