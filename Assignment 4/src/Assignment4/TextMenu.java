@@ -31,11 +31,8 @@ public class TextMenu {
           return;
 
         case 1: // To add ingredient
-          // ingredients.addIngredient();
           var ingredient = addIngredientsMenu(scanner);
           ingredients.addIngredient(ingredient);
-          // scanner.close();
-          // MainMenu();
           break;
 
         case 2: // List all ingredients
@@ -155,27 +152,55 @@ public class TextMenu {
     scanner.nextLine();
     String instruction = scanner.nextLine();
     recipe.addInstructions(instruction);
-    
 
     System.out.println("Add comments");
     String comment = scanner.nextLine();
     recipe.addComment(comment);
-  
+
     System.out.println("Recipe added.");
     System.out.println(recipe);
+    this.recipe.add(recipe);
   }
 
   private void showRecipe(Scanner scanner) {
-    System.out.println("Here are all recipes. Write number what you want see");
+    System.out.println("List of all recipes:");
     // Print list with all recipes.
     for (int i = 0; i < recipe.size(); i++) {
-      System.out.printf("%d %s", i, recipe.get(i).name);
+      System.out.println(recipe.get(i).name + "\n");
     }
-    int num = scanner.nextInt();
-    if (num >= recipe.size()) {
-      // Add error handeling
+    System.out.println("Write the name of the recipe that you would like to see.");
+    scanner.nextLine();
+    String name = scanner.nextLine();
+    System.out.println("How many portions would you like?");
+    double portions = scanner.nextDouble();
+    getRecipe(name, portions);
+    scanner.nextLine();
+
+  }
+
+// Get specific recipe and specific ingredients and amount.
+  public void getRecipe(String name, double wantedPortions) {
+    for (int i = 0; i < recipe.size(); i++) {
+      if (recipe.get(i).name.equals(name)) {
+        double actualPortions = recipe.get(i).portions;
+        int number = recipe.get(i).ingredients.numberOfIngredients(); // Find out how many ingredients there is in the recipe.
+        var ingredientsValue = recipe.get(i).ingredients.getValue(number); // Get value of each ingredient.
+ 
+        // find out how much is needed for 1 portion
+        ingredients.updatePortions(number, ingredientsValue, wantedPortions, actualPortions);
+
+        //System.out.println(recipe.get(i)); // Print name and ingredients of recipe.
+           
+       
+       
+       
+       
+       // Check if actual and wanted protions diff.
+        // if (actualPortions < wantedPortions || actualPortions > wantedPortions) {
+       
+        // }
+        
+      }
     }
-    var showRecipe = recipe.get(num);
-    System.out.println(showRecipe.toString());
   }
 }

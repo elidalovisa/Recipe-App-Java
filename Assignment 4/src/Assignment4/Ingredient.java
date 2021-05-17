@@ -11,5 +11,10 @@ public class Ingredient {
     this.value = value;
     this.price = price;
   }
-
+  
+/*
+  public String toString() {
+    return String.format("%s; %d  %d; : %s; Price:", name, value, unit, price);
+  }
+  */
 }
