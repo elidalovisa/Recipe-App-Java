@@ -40,4 +40,8 @@ public class Recipe {
   public String toString() {
     return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, ingredients.getTotalCost());
   }
+
+  public void calculateIngredients(int wantedPortions) {
+    ingredients.calculateIng(wantedPortions);
+  }
 }

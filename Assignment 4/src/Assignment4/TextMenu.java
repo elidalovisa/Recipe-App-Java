@@ -172,34 +172,38 @@ public class TextMenu {
     scanner.nextLine();
     String name = scanner.nextLine();
     System.out.println("How many portions would you like?");
-    double portions = scanner.nextDouble();
+    int portions = scanner.nextInt();
     getRecipe(name, portions);
     scanner.nextLine();
 
   }
 
-// Get specific recipe and specific ingredients and amount.
-  public void getRecipe(String name, double wantedPortions) {
+  // Get specific recipe and specific ingredients and amount.
+  public void getRecipe(String name, int wantedPortions) {
     for (int i = 0; i < recipe.size(); i++) {
       if (recipe.get(i).name.equals(name)) {
         double actualPortions = recipe.get(i).portions;
-        int number = recipe.get(i).ingredients.numberOfIngredients(); // Find out how many ingredients there is in the recipe.
-        var ingredientsValue = recipe.get(i).ingredients.getValue(number); // Get value of each ingredient.
- 
-        // find out how much is needed for 1 portion
-        ingredients.updatePortions(number, ingredientsValue, wantedPortions, actualPortions);
+        recipe.get(i).portions = wantedPortions;
 
-        //System.out.println(recipe.get(i)); // Print name and ingredients of recipe.
-           
-       
-       
-       
-       
-       // Check if actual and wanted protions diff.
-        // if (actualPortions < wantedPortions || actualPortions > wantedPortions) {
-       
-        // }
+        int number = recipe.get(i).ingredients.numberOfIngredients(); // Find out how many ingredients there is in the
+        recipe.get(i).ingredients.getValue(number); // Get value of each ingredient.
+
+        recipe.get(i).calculateIngredients(wantedPortions);
+        System.out.println(recipe.get(i));
         
+        var pricePerIngredient = recipe.get(i).ingredients.getPrice(number);
+        var instruction = recipe.get(i).instruction;
+        var comment = recipe.get(i).instruction;
+       //System.out.println(recipe.get(i).ingredients.updatePortions(number, ingredientsValue, wantedPortions, actualPortions pricePerIngredient, name, instruction, comment));
+
+
+        // return array with updated value and change value in existing array?
+
+        // Check if actual and wanted protions diff.
+        // if (actualPortions < wantedPortions || actualPortions > wantedPortions) {
+
+        // }
+
       }
     }
   }
