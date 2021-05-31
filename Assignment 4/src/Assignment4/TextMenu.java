@@ -26,6 +26,7 @@ public class TextMenu {
       System.out.println("Press 3 to add recipe");
       System.out.println("Press 4 to show all recipes and select one recipe.");
       System.out.println("Press 5 to delete a recipe");
+      System.out.println("Press 6 to search for a recipe");
 
       System.out.println("______________________");
       int choice = scanner.nextInt();
@@ -33,7 +34,7 @@ public class TextMenu {
       switch (choice) {
         case 0:
         saveRecipeToDisk();
-        ingredients.saveIngredientsToDisk();          
+     //   ingredients.saveIngredientsToDisk();          
           run = false;
           return;
 
@@ -54,8 +55,14 @@ public class TextMenu {
           showRecipe(scanner);
           break;
 
-          case 5: // Delete a recip5
-          removeRecipe(scanner);
+          case 5: // Delete a recipe
+          Search(scanner);
+
+          //removeRecipe(scanner);
+          break;
+
+          case 6: // Search for a recipe
+          Search(scanner);
           break;
 
         default:
@@ -300,7 +307,12 @@ scan.close();
 System.out.println(recipeList);
 }
 
-private ArrayList<Recipe> list() {
-  return new ArrayList<Recipe>();
+
+public void Search(Scanner scanner) {
+  System.out.println("Write the name of the ingredient.");
+  scanner.nextLine();
+  String name = scanner.nextLine();
+  SearchForRecipe searchRecipe = new SearchForRecipe();
+  searchRecipe.searchIngredient(name);
 }
 }

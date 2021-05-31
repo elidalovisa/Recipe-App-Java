@@ -1,4 +1,6 @@
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable  {
   String name;
   String unit;
   Double value;
@@ -12,9 +14,10 @@ public class Ingredient {
     this.price = price;
   }
   
-
+/*
   public String toString() {
     return String.format("%s; %d  %d; : %s; Price:", name, value, unit, price);
   }
+  */
 
 }

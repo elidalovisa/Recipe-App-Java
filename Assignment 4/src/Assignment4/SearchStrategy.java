@@ -1,8 +1,5 @@
 // Interface which abstract the operation.
 public interface SearchStrategy {
-  public void serchRecipe() {
-
-  }
+  public void searchIngredient(String name);
+  public void searchMaxPrice(int number);
 }
-
-// Do one strategy for each search criteria

@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.Scanner;
+import java.io.Serializable;
+
 import java.io.*;
 
-
-public class ListIngredients {
+public class ListIngredients implements Serializable {
 
   ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
 
