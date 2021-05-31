@@ -1,19 +1,12 @@
 import java.util.ArrayList;
 import java.util.stream.Collectors;
+import java.util.Scanner;
+import java.io.*;
+
 
 public class ListIngredients {
 
   ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-  ArrayList<Double> portionCost = new ArrayList<Double>(); // Array to store portion cost.
-  ArrayList<Double> portionValue = new ArrayList<Double>(); // Array to store value of each ingredient.
-  ArrayList<Double> onePortion = new ArrayList<Double>(); // Array to store one portion.
-  ArrayList<Double> wholePortions = new ArrayList<Double>();
-
-  ArrayList<String> portionsForRecipe = new ArrayList<String>(); // Array to store wanted portions for a recipe.
-  ArrayList<Double> onePortionPrice = new ArrayList<Double>(); // Array to store price per ingredient for 1 portion.
-  ArrayList<Double> wantedPortionsPrice = new ArrayList<Double>(); // Array to store price per ingredient for wanted
-                                                                   // portions.
-  ArrayList<String> recipeToReturn = new ArrayList<String>();
 
   // Constructor
   public ListIngredients() {
@@ -53,36 +46,12 @@ public class ListIngredients {
       }
     }
   }
-
-  // Iterate and return value for ingredients in recipe.
-  public ArrayList<Double> getValue(int number) {
-    for (int i = 0; i < number; i++) {
-      portionValue.add(ingredients.get(i).value);
-    }
-    return portionValue;
-  }
-
-  public ArrayList<Double> getPrice(int number) {
-    for (int i = 0; i < number; i++) {
-      portionCost.add(ingredients.get(i).price);
-    }
-    return portionCost;
-  }
-
-  // Find out how many ingredients a recipe has.
-  public int numberOfIngredients() {
-    int result = 0;
-    for (int i = 0; i < this.ingredients.size(); i++) {
-      result++;
-    }
-    return result;
-  }
-
+  
   // Calculate amount and price of ingredients after amount of portions.
   public void calculateIng(int wantedPortions) {
     for (int i = 0; i < this.ingredients.size(); i++) {
       ingredients.get(i).value = ingredients.get(i).value / ingredients.get(i).value;
-      Math.ceil(ingredients.get(i).value);
+      //Math.ceil(ingredients.get(i).value);
       ingredients.get(i).price = ingredients.get(i).price / ingredients.size();
     }
     for (int j = 0; j < this.ingredients.size(); j++) {
@@ -127,4 +96,18 @@ public class ListIngredients {
     }
     return sum;
   }
+
+  public void saveIngredientsToDisk() {
+  try {
+    File outFileIngredients = new File("C:\\users\\Elida\\Desktop\\ingredients.txt");
+    PrintWriter printer = new PrintWriter(outFileIngredients);
+    for (int i = 0; i < ingredients.size(); i++) {
+     printer.print(ingredients.get(i));
+    }
+    printer.close();
+  } catch (IOException e) {
+    System.out.println("An error occurred.");
+    e.printStackTrace();
+  }
+}
 }

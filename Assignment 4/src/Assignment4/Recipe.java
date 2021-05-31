@@ -2,8 +2,9 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.io.Serializable;
 
-public class Recipe {
+public class Recipe implements Serializable {
   String name;
   int portions;
   ListIngredients ingredients = new ListIngredients();
