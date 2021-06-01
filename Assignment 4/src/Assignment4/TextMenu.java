@@ -8,7 +8,7 @@ public class TextMenu {
   ListIngredients ingredients;
   ArrayList<Recipe> recipe = new ArrayList<Recipe>();
   File fileRecipe = new File("recipe.txt");
-
+  File ingredientsDisk = new File("ingredients.txt");
 
   public TextMenu() {
     ingredients = new ListIngredients();
@@ -34,7 +34,7 @@ public class TextMenu {
       if(choice <= 5) {
       switch (choice) {
         case 0:
-        saveRecipeToDisk();
+       // saveRecipeToDisk();
        // ingredients.saveIngredientsToDisk();          
           run = false;
           return;
@@ -103,6 +103,7 @@ public class TextMenu {
     // Create a new ingredient
     Ingredient ingredient = new Ingredient(name, unit, value, price);
     System.out.println("Ingredient added.");
+    //ingredients.saveIngredientsToDisk();
     return ingredient;
   }
 
@@ -130,8 +131,6 @@ public class TextMenu {
   }
 
   private void listAllIngredients(Scanner scanner) {
- //   ingredients.saveIngredientsToDisk();
-
     var allNames = ingredients.getAllNames();
     for (int i = 0; i < allNames.size(); i++) {
       System.out.printf("%d %s", i, allNames.get(i) + "\n");
@@ -152,7 +151,7 @@ public class TextMenu {
   public ArrayList<Ingredient> readIngredients() {
     ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>();
     try {
-      FileInputStream fis = new FileInputStream("t.tmp");
+      FileInputStream fis = new FileInputStream("ingredients.txt");
       ObjectInputStream ois = new ObjectInputStream(fis);
       ingredientsList = (ArrayList<Ingredient>) ois.readObject();
       ois.close();
@@ -163,6 +162,7 @@ public class TextMenu {
 } catch (ClassNotFoundException e) {
   System.out.println("An error occurred.");
 }
+System.out.println(ingredientsList);
 return ingredientsList;
   }
 
@@ -204,6 +204,7 @@ return ingredientsList;
     System.out.println("Recipe added.");
     System.out.println(recipe);
     this.recipe.add(recipe);
+    saveRecipeToDisk();
   }
 
   private void showRecipe(Scanner scanner) {
@@ -247,8 +248,18 @@ return ingredientsList;
     String name = scanner.nextLine();
     for (int i = 0; i < savedRecipes .size(); i++) {
       if (savedRecipes .get(i).name.equals(name)) {
-        savedRecipes .remove(savedRecipes .get(i));
+        savedRecipes .remove(savedRecipes.get(i));
         System.out.println("Recipe " + name + " deleted.");
+         // Update saved file.
+         try {
+          FileOutputStream fos = new FileOutputStream(fileRecipe);
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(savedRecipes);
+      oos.close();
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }   
         return; // return true and false
       }
     }

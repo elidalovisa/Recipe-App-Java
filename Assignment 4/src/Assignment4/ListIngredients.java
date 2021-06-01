@@ -19,13 +19,16 @@ public class ListIngredients implements Serializable {
       return -1;
     }
     ingredients.add(ingredient);
+    saveIngredientsToDisk();
     return 0;
   }
 
   public boolean checkIfNameExist(String name) {
-    for (int i = 0; i < this.ingredients.size(); i++) {
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
+    for (int i = 0; i < savedIngredients.size(); i++) {
       System.out.println(name);
-      if (ingredients.get(i).name.equals(name)) {
+      if (savedIngredients.get(i).name.equals(name)) {
         return true;
       }
     }
@@ -34,15 +37,19 @@ public class ListIngredients implements Serializable {
 
   // Iterate and return all names.
   public ArrayList<String> getAllNames() {
-    return ingredients.stream().map(s -> s.name).collect(Collectors.toCollection(ArrayList<String>::new));
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
+    return savedIngredients.stream().map(s -> s.name).collect(Collectors.toCollection(ArrayList<String>::new));
   }
 
   // Iterate and return selected ingredient.
   public void getIngredient(String name) {
-    for (int i = 0; i < ingredients.size(); i++) {
-      if (ingredients.get(i).name.equals(name)) {
-        System.out.println(ingredients.get(i).name + " " + ingredients.get(i).unit + " " + ingredients.get(i).value
-            + " " + ingredients.get(i).price);
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
+    for (int i = 0; i < savedIngredients.size(); i++) {
+      if (savedIngredients.get(i).name.equals(name)) {
+        System.out.println(savedIngredients.get(i).name + " " + savedIngredients.get(i).unit + " " + savedIngredients.get(i).value
+            + " " + savedIngredients.get(i).price);
         // make a toString()
       }
     }
@@ -50,14 +57,16 @@ public class ListIngredients implements Serializable {
   
   // Calculate amount and price of ingredients after amount of portions.
   public void calculateIng(int wantedPortions) {
-    for (int i = 0; i < ingredients.size(); i++) {
-      ingredients.get(i).value = ingredients.get(i).value / ingredients.get(i).value;
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
+    for (int i = 0; i < savedIngredients.size(); i++) {
+      savedIngredients.get(i).value = savedIngredients.get(i).value / savedIngredients.get(i).value;
       //Math.ceil(ingredients.get(i).value);
-      ingredients.get(i).price = ingredients.get(i).price / ingredients.size();
+      savedIngredients.get(i).price = savedIngredients.get(i).price / savedIngredients.size();
     }
-    for (int j = 0; j < ingredients.size(); j++) {
-      ingredients.get(j).value = ingredients.get(j).value * wantedPortions;
-      ingredients.get(j).price = ingredients.get(j).price * wantedPortions;
+    for (int j = 0; j < savedIngredients.size(); j++) {
+      savedIngredients.get(j).value = savedIngredients.get(j).value * wantedPortions;
+      savedIngredients.get(j).price = savedIngredients.get(j).price * wantedPortions;
     }
   }
 
@@ -80,9 +89,23 @@ public class ListIngredients implements Serializable {
   }
 
   public void removeIngredient(String name) {
-    for (int i = 0; i < this.ingredients.size(); i++) {
-      if (ingredients.get(i).name.equals(name)) {
-        ingredients.remove(ingredients.get(i));
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
+    System.out.println(savedIngredients);
+    for (int i = 0; i < savedIngredients.size(); i++) {
+      if (savedIngredients.get(i).name.equals(name)) {
+        savedIngredients.remove(savedIngredients.get(i));
+        System.out.println(savedIngredients);
+       // Update saved file.
+        try {
+          FileOutputStream fos = new FileOutputStream("ingredients.txt");
+      ObjectOutputStream oos = new ObjectOutputStream(fos);
+      oos.writeObject(savedIngredients);
+      oos.close();
+          } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+          }   
         return; // return true and false
       }
     }
@@ -91,18 +114,25 @@ public class ListIngredients implements Serializable {
 
   // Calculate total cost of recipe.
   public int getTotalCost() {
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
     int sum = 0;
-    for (int i = 0; i < ingredients.size(); i++) {
-      sum += ingredients.get(i).price;
+    for (int i = 0; i < savedIngredients.size(); i++) {
+      sum += savedIngredients.get(i).price;
     }
     return sum;
   }
 
   public void saveIngredientsToDisk() {
+    File ingredientsDisk = new File("ingredients.txt");
+
+    TextMenu menu = new TextMenu();
+    var savedIngredients = menu.readIngredients();
+    savedIngredients.addAll(ingredients);
     try {
-      FileOutputStream fos = new FileOutputStream("t.tmp");
+      FileOutputStream fos = new FileOutputStream(ingredientsDisk);
   ObjectOutputStream oos = new ObjectOutputStream(fos);
-  oos.writeObject(ingredients);
+  oos.writeObject(savedIngredients);
   oos.close();
       } catch (IOException e) {
         System.out.println("An error occurred.");
