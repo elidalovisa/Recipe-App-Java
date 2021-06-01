@@ -2,10 +2,13 @@
 public class SearchIngName implements SearchStrategy {
   ListIngredients ingredients;
 
-  public void searchIngredient(String name, ListIngredients ingredients){
+  public void searchIngredient(String name){
 // Implement code to search for ingredient.
 // Import ingredients and search
-  ingredients = new ListIngredients();
+TextMenu text = new TextMenu();
+var savedRecipes = text.readRecipe();
+
+// if name match found else recipe does not exist.
 
 System.out.println("Searching for " + name + " Ingredient name");
   }

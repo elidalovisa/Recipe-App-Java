@@ -7,7 +7,8 @@ public class TextMenu {
 
   ListIngredients ingredients;
   ArrayList<Recipe> recipe = new ArrayList<Recipe>();
-  
+  File fileRecipe = new File("recipe.txt");
+
 
   public TextMenu() {
     ingredients = new ListIngredients();
@@ -34,7 +35,7 @@ public class TextMenu {
       switch (choice) {
         case 0:
         saveRecipeToDisk();
-     //   ingredients.saveIngredientsToDisk();          
+       // ingredients.saveIngredientsToDisk();          
           run = false;
           return;
 
@@ -56,9 +57,9 @@ public class TextMenu {
           break;
 
           case 5: // Delete a recipe
-          Search(scanner);
+          //Search(scanner);
 
-          //removeRecipe(scanner);
+          removeRecipe(scanner);
           break;
 
           case 6: // Search for a recipe
@@ -129,12 +130,12 @@ public class TextMenu {
   }
 
   private void listAllIngredients(Scanner scanner) {
+ //   ingredients.saveIngredientsToDisk();
+
     var allNames = ingredients.getAllNames();
     for (int i = 0; i < allNames.size(); i++) {
       System.out.printf("%d %s", i, allNames.get(i) + "\n");
     } 
-    readIngredients();
-
     System.out.println("Please write ingredient name to show details and/or remove ingredient.");
     scanner.nextLine();
     String name = scanner.nextLine();
@@ -148,26 +149,21 @@ public class TextMenu {
     }
   }
 
-  public void readIngredients() {
-    StringBuilder ingredients = new StringBuilder();
-  
+  public ArrayList<Ingredient> readIngredients() {
+    ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>();
     try {
-  File file = new File("C:\\users\\Elida\\Desktop\\ingredients.txt");
-  
-  
-  Scanner scan = new Scanner(file);
-  while(scan.hasNext()) {
-  String str = scan.nextLine();
-  ingredients.append(str + "\n"); 
-  }
-  System.out.println(ingredients);
-  scan.close();
-  
-  
-  } catch (IOException e) {
+      FileInputStream fis = new FileInputStream("t.tmp");
+      ObjectInputStream ois = new ObjectInputStream(fis);
+      ingredientsList = (ArrayList<Ingredient>) ois.readObject();
+      ois.close();
+
+} catch (IOException e) {
   System.out.println("An error occurred.");
   e.printStackTrace();
-  }
+} catch (ClassNotFoundException e) {
+  System.out.println("An error occurred.");
+}
+return ingredientsList;
   }
 
   private void addRecipeMenu(Scanner scanner) {
@@ -211,12 +207,12 @@ public class TextMenu {
   }
 
   private void showRecipe(Scanner scanner) {
-    readRecipe();
-    /*System.out.println("List of all recipes:");
+   var savedRecipes = readRecipe();
+    System.out.println("List of all recipes:");
     // Print list with all recipes.
-    for (int i = 0; i < recipe.size(); i++) {
-      System.out.println(recipe.get(i).name + "\n");
-    } */
+    for (int i = 0; i < savedRecipes.size(); i++) {
+      System.out.println(savedRecipes.get(i).name);
+    } 
     System.out.println("Write the name of the recipe that you would like to see.");
     scanner.nextLine();
     String name = scanner.nextLine();
@@ -228,28 +224,30 @@ public class TextMenu {
  
   // Get specific recipe and specific ingredients and amount.
   public void getRecipe(String name, int wantedPortions) {
-    for (int i = 0; i < recipe.size(); i++) {
-      if (recipe.get(i).name.equals(name)) {
-        recipe.get(i).portions = wantedPortions;
-        recipe.get(i).calculateIngredients(wantedPortions);
-        System.out.println(recipe.get(i));
+    var savedRecipes = readRecipe();
+    for (int i = 0; i < savedRecipes.size(); i++) {
+      if (savedRecipes.get(i).name.equals(name)) {
+        savedRecipes.get(i).portions = wantedPortions;
+        savedRecipes.get(i).calculateIngredients(wantedPortions);
+        System.out.println(savedRecipes.get(i));
 
       }
     }
   }
 
   public void removeRecipe(Scanner scanner) {
+    var savedRecipes = readRecipe();
     System.out.println("List of all recipes:");
     // Print list with all recipes.
-    for (int i = 0; i < recipe.size(); i++) {
-      System.out.println(recipe.get(i).name + "\n");
+    for (int i = 0; i < savedRecipes.size(); i++) {
+      System.out.println(savedRecipes.get(i).name);
     }
     System.out.println("Write the name of the recipe that you would like delete.");
     scanner.nextLine();
     String name = scanner.nextLine();
-    for (int i = 0; i < recipe.size(); i++) {
-      if (recipe.get(i).name.equals(name)) {
-        recipe.remove(recipe.get(i));
+    for (int i = 0; i < savedRecipes .size(); i++) {
+      if (savedRecipes .get(i).name.equals(name)) {
+        savedRecipes .remove(savedRecipes .get(i));
         System.out.println("Recipe " + name + " deleted.");
         return; // return true and false
       }
@@ -258,19 +256,15 @@ public class TextMenu {
   }
   
   private void saveRecipeToDisk() {
-try {
-    FileOutputStream fos = new FileOutputStream("t.tmp");
+// Check if there is anything saved to file.
+var savedRecipes = readRecipe();
+// Add new recipes to already saved recipes.
+savedRecipes.addAll(recipe);
+try {		
+FileOutputStream fos = new FileOutputStream(fileRecipe);
 ObjectOutputStream oos = new ObjectOutputStream(fos);
-oos.writeObject(recipe);
+oos.writeObject(savedRecipes);
 oos.close();
-   /* try {
-      File outFileRecipe = new File("C:\\users\\Elida\\Desktop\\recipe.txt");
-      PrintWriter printer = new PrintWriter(outFileRecipe);
-      for (int i = 0; i < recipe.size(); i++) {
-       printer.print(recipe.get(i));
-      }
-      printer.close();
-      */
     } catch (IOException e) {
       System.out.println("An error occurred.");
       e.printStackTrace();
@@ -278,25 +272,13 @@ oos.close();
   }
    
 
-  public void readRecipe() {
+  public ArrayList<Recipe> readRecipe() {
    ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
-
     try {
-      FileInputStream fis = new FileInputStream("t.tmp");
+      FileInputStream fis = new FileInputStream(fileRecipe);
       ObjectInputStream ois = new ObjectInputStream(fis);
       recipeList = (ArrayList<Recipe>) ois.readObject();
       ois.close();
-
-/*File file = new File("C:\\users\\Elida\\Desktop\\recipe.txt");
-
-Scanner scan = new Scanner(file);
-while(scan.hasNext()) {
- // String str = scan.nextLine();
-  recipe.add(scan.next()); 
-}
-System.out.println(recipe);
-scan.close();
-*/
 
 } catch (IOException e) {
   System.out.println("An error occurred.");
@@ -304,7 +286,8 @@ scan.close();
 } catch (ClassNotFoundException e) {
   System.out.println("An error occurred.");
 }
-System.out.println(recipeList);
+
+return recipeList;
 }
 
 

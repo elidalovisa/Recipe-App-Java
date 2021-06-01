@@ -39,7 +39,7 @@ public class ListIngredients implements Serializable {
 
   // Iterate and return selected ingredient.
   public void getIngredient(String name) {
-    for (int i = 0; i < this.ingredients.size(); i++) {
+    for (int i = 0; i < ingredients.size(); i++) {
       if (ingredients.get(i).name.equals(name)) {
         System.out.println(ingredients.get(i).name + " " + ingredients.get(i).unit + " " + ingredients.get(i).value
             + " " + ingredients.get(i).price);
@@ -50,12 +50,12 @@ public class ListIngredients implements Serializable {
   
   // Calculate amount and price of ingredients after amount of portions.
   public void calculateIng(int wantedPortions) {
-    for (int i = 0; i < this.ingredients.size(); i++) {
+    for (int i = 0; i < ingredients.size(); i++) {
       ingredients.get(i).value = ingredients.get(i).value / ingredients.get(i).value;
       //Math.ceil(ingredients.get(i).value);
       ingredients.get(i).price = ingredients.get(i).price / ingredients.size();
     }
-    for (int j = 0; j < this.ingredients.size(); j++) {
+    for (int j = 0; j < ingredients.size(); j++) {
       ingredients.get(j).value = ingredients.get(j).value * wantedPortions;
       ingredients.get(j).price = ingredients.get(j).price * wantedPortions;
     }
@@ -99,16 +99,14 @@ public class ListIngredients implements Serializable {
   }
 
   public void saveIngredientsToDisk() {
-  try {
-    File outFileIngredients = new File("C:\\users\\Elida\\Desktop\\ingredients.txt");
-    PrintWriter printer = new PrintWriter(outFileIngredients);
-    for (int i = 0; i < ingredients.size(); i++) {
-     printer.print(ingredients.get(i));
-    }
-    printer.close();
-  } catch (IOException e) {
-    System.out.println("An error occurred.");
-    e.printStackTrace();
-  }
+    try {
+      FileOutputStream fos = new FileOutputStream("t.tmp");
+  ObjectOutputStream oos = new ObjectOutputStream(fos);
+  oos.writeObject(ingredients);
+  oos.close();
+      } catch (IOException e) {
+        System.out.println("An error occurred.");
+        e.printStackTrace();
+      }   
 }
 }
