@@ -38,6 +38,11 @@ public class Recipe implements Serializable {
     this.instruction = instruction;
   }
 
+
+  public void addTotalCost() {
+    this.totalCost = ingredients.getTotalCost();
+  }
+
   public String toString() {
     return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, ingredients.getTotalCost());
   }

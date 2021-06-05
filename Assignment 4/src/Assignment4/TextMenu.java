@@ -57,9 +57,9 @@ public class TextMenu {
           break;
 
           case 5: // Delete a recipe
-          //Search(scanner);
+          Search(scanner);
 
-          removeRecipe(scanner);
+          //removeRecipe(scanner);
           break;
 
           case 6: // Search for a recipe
@@ -201,6 +201,7 @@ return ingredientsList;
     System.out.println("Add comments");
     String comment = scanner.nextLine();
     recipe.addComment(comment);
+    recipe.addTotalCost();
     System.out.println("Recipe added.");
     System.out.println(recipe);
     this.recipe.add(recipe);
@@ -243,7 +244,7 @@ return ingredientsList;
     for (int i = 0; i < savedRecipes.size(); i++) {
       System.out.println(savedRecipes.get(i).name);
     }
-    System.out.println("Write the name of the recipe that you would like delete.");
+    System.out.println("Write the name of the recipe that you would like to delete.");
     scanner.nextLine();
     String name = scanner.nextLine();
     for (int i = 0; i < savedRecipes .size(); i++) {
@@ -303,10 +304,15 @@ return recipeList;
 
 
 public void Search(Scanner scanner) {
-  System.out.println("Write the name of the ingredient.");
+/*  System.out.println("Write the name of the ingredient.");
   scanner.nextLine();
   String name = scanner.nextLine();
   SearchForRecipe searchRecipe = new SearchForRecipe();
-  searchRecipe.searchIngredient(name);
+  searchRecipe.searchIngredient(name); */
+  System.out.println("Write maxprice of recipe that you would like to serach for.");
+  //scanner.nextInt();
+  int number = scanner.nextInt();
+  SearchForRecipe searchRecipe = new SearchForRecipe();
+  searchRecipe.searchMaxPrice(number);
 }
 }
