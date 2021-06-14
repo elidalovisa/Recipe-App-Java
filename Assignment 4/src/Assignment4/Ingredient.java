@@ -5,6 +5,7 @@ public class Ingredient implements Serializable  {
   String unit;
   Double value;
   Double price;
+  Double baseCost;
 
   // Constructor
   public Ingredient(String name, String unit, double value, double price) {
@@ -12,12 +13,12 @@ public class Ingredient implements Serializable  {
     this.unit = unit;
     this.value = value;
     this.price = price;
+    this.baseCost = this.price / this.value;
   }
   
-/*
   public String toString() {
-    return String.format("%s; %d  %d; : %s; Price:", name, value, unit, price);
+    return String.format("%s; %.2f %s; Price: %.2f", name, value, unit, price);
   }
-  */
+  
 
 }

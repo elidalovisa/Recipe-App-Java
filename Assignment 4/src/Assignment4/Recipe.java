@@ -27,7 +27,7 @@ public class Recipe implements Serializable {
   }
 
   public void addIngredient(Ingredient ingredient) {
-    ingredients.addIngredient(ingredient);
+    ingredients.addIngredientRecipe(ingredient);
   }
 
   public void addComment(String comment) {
@@ -38,16 +38,24 @@ public class Recipe implements Serializable {
     this.instruction = instruction;
   }
 
-
   public void addTotalCost() {
-    this.totalCost = ingredients.getTotalCost();
+    this.totalCost = ingredients.getTotalCost(portions);
   }
 
   public String toString() {
-    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, ingredients.getTotalCost());
+    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, ingredients.getTotalCost(portions));
   }
 
-  public void calculateIngredients(int wantedPortions) {
-    ingredients.calculateIng(wantedPortions);
+  public void updatePortions(int wantedPortions) {
+    var oldPortions = this.portions;
+    ArrayList<Double> baseValueIngredients = new ArrayList<Double>();
+
+    for(int i = 0; i < ingredients.size(); i++) {
+      baseValueIngredients.add(ingredients.get(i).value / oldPortions);
+    }
+    for(int j = 0; j < ingredients.size(); j++) {
+      ingredients.get(j).value = baseValueIngredients.get(j)* wantedPortions;
+    }
+    this.portions = wantedPortions;
   }
 }
