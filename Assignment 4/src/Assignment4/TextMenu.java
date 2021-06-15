@@ -243,7 +243,7 @@ public class TextMenu {
     for (int i = 0; i < savedRecipes.size(); i++) {
       if (savedRecipes.get(i).name.equals(name)) {
         savedRecipes.get(i).updatePortions(wantedPortions);
-        savedRecipes.get(i).addTotalCost();
+       // savedRecipes.get(i).addTotalCost();
         System.out.println(savedRecipes.get(i));
       }
     }

@@ -54,6 +54,7 @@ public class Recipe implements Serializable {
 
   public void updatePortions(int wantedPortions) {
     int oldPortions = this.portions;
+    int sum = 0;
     ArrayList<Double> baseValueIngredients = new ArrayList<Double>();
 
     for(int i = 0; i < ingredients.size(); i++) {
@@ -61,12 +62,15 @@ public class Recipe implements Serializable {
     }
     for(int j = 0; j < ingredients.size(); j++) {
       ingredients.get(j).value = baseValueIngredients.get(j)* wantedPortions;
-   System.out.println("j value" + ingredients.get(j).value);
      if(ingredients.get(j).unit.equals("Pieces")){
       ingredients.get(j).value = Math.ceil(ingredients.get(j).value);
-        System.out.println("math ciel value " +  ingredients.get(j).value );
       } 
+      System.out.println(ingredients.get(j).baseCost);
+     sum += ingredients.get(j).baseCost * wantedPortions;
+     System.out.println(sum);
+
     }
     this.portions = wantedPortions;
+    this.totalCost = sum;
   }
 }
