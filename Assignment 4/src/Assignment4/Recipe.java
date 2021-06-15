@@ -5,6 +5,8 @@ import java.util.List;
 import java.io.Serializable;
 
 public class Recipe implements Serializable {
+  private static final long serialVersionUID = 1234569L;
+
   String name;
   int portions;
   ListIngredients ingredients = new ListIngredients();
@@ -42,12 +44,16 @@ public class Recipe implements Serializable {
     this.totalCost = ingredients.getTotalCost(portions);
   }
 
+  public void calculatePrice() {
+    this.totalCost = ingredients.calculateTotalPrice();
+  }
+
   public String toString() {
-    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, ingredients.getTotalCost(portions));
+    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, totalCost);
   }
 
   public void updatePortions(int wantedPortions) {
-    var oldPortions = this.portions;
+    int oldPortions = this.portions;
     ArrayList<Double> baseValueIngredients = new ArrayList<Double>();
 
     for(int i = 0; i < ingredients.size(); i++) {
@@ -55,6 +61,11 @@ public class Recipe implements Serializable {
     }
     for(int j = 0; j < ingredients.size(); j++) {
       ingredients.get(j).value = baseValueIngredients.get(j)* wantedPortions;
+   System.out.println("j value" + ingredients.get(j).value);
+     if(ingredients.get(j).unit.equals("Pieces")){
+      ingredients.get(j).value = Math.ceil(ingredients.get(j).value);
+        System.out.println("math ciel value " +  ingredients.get(j).value );
+      } 
     }
     this.portions = wantedPortions;
   }

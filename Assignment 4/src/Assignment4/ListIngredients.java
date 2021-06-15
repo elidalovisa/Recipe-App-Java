@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.io.*;
 
 public class ListIngredients implements Serializable {
+  private static final long serialVersionUID = 1234567L;
 
   ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
   private double totalCost;
@@ -76,33 +77,23 @@ public class ListIngredients implements Serializable {
   public double calculatePrice(int wantedPortions) {
     TextMenu menu = new TextMenu();
     var savedIngredients = menu.readIngredients();
-    this.totalCost = 0;
+    var total = 0;
     for(int i = 0; i < savedIngredients.size(); i++) {
-      totalCost += savedIngredients.get(i).baseCost * wantedPortions;
+      total += savedIngredients.get(i).baseCost * wantedPortions;
     }
-    return this.totalCost;
+    return total;
+  }
 
-// Calculate total price
-
-
-// Calculate amount of ingredients
-
-
-
-
-
-    //System.out.println(savedIngredients);
-    // for (int i = 0; i < savedIngredients.size(); i++) {
-    //   // add if piece round up.
-    //   var privePerUnit = savedIngredients.get(i).price / savedIngredients.get(i).value;
-
-    //   //Math.ceil(ingredients.get(i).value);
-    //   savedIngredients.get(i).price = savedIngredients.get(i).price / savedIngredients.size();
-    // }
-    // for (int j = 0; j < savedIngredients.size(); j++) {
-    //   savedIngredients.get(j).value = savedIngredients.get(j).value * wantedPortions;
-    //   savedIngredients.get(j).price = savedIngredients.get(j).price * wantedPortions;
-    // }
+  
+  // Calculate amount and price of ingredients after amount of portions.
+  public int calculateTotalPrice() {
+    int sum = 0;
+   
+    for(int i = 0; i < ingredients.size(); i++) {
+      System.out.println(ingredients.get(i).price);
+      sum += ingredients.get(i).price;
+    }
+    return sum;
   }
 
   public String toString() {
@@ -111,14 +102,14 @@ public class ListIngredients implements Serializable {
       str.append("");
     }
     for (int i = 0; i < this.ingredients.size(); i++) {
-      str.append(" ");
+     // str.append(" ");
       str.append(ingredients.get(i).name);
-     /* str.append(" ");
+      str.append(" ");
       str.append(ingredients.get(i).value);
       str.append(" ");
       str.append(ingredients.get(i).unit);
-      str.append(" ");
-      str.append("Price:" + ingredients.get(i).price); */
+      str.append(",");
+     // str.append("Price:" + ingredients.get(i).price); */
     }
     return str.toString();
   }
@@ -153,6 +144,7 @@ public class ListIngredients implements Serializable {
     var savedIngredients = menu.readIngredients();
     int sum = 0;
     for (int i = 0; i < savedIngredients.size(); i++) {
+      System.out.println("basecost " + savedIngredients.get(i).baseCost);
       sum += savedIngredients.get(i).baseCost * portions;
     }
     return sum;

@@ -201,9 +201,11 @@ public class TextMenu {
         keepAddIngredient = false;
       }
     }
+   
     // Calculate total cost for recipe after all ingredients are added.
-    ingredients.getTotalCost(portions);
-
+ 
+    // ingredients.getTotalCost(portions);
+      recipe.calculatePrice();
     System.out.println("Add instructions");
     scanner.nextLine();
     String instruction = scanner.nextLine();
@@ -212,7 +214,7 @@ public class TextMenu {
     System.out.println("Add comments");
     String comment = scanner.nextLine();
     recipe.addComment(comment);
-    recipe.addTotalCost();
+    //recipe.addTotalCost();
     System.out.println("Recipe added.");
     System.out.println(recipe);
     this.recipe.add(recipe);
