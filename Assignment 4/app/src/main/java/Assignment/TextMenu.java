@@ -1,3 +1,5 @@
+package Assignment;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
@@ -320,7 +322,7 @@ public class TextMenu {
 
 public void Search(Scanner scanner) {
 System.out.println("Press 1 to search for max price of recipe. Press 2 to search for ingredient in recipe.");
-  scanner.nextInt();
+ // scanner.nextInt();
   int choice = scanner.nextInt();
   if(choice == 1) {
     System.out.println("Write maxprice of recipe that you would like to serach for.");
@@ -328,8 +330,9 @@ System.out.println("Press 1 to search for max price of recipe. Press 2 to search
     SearchForRecipe searchRecipe = new SearchForRecipe();
     searchRecipe.searchMaxPrice(number);
   } 
-  else if (choice == 2) {
+  if (choice == 2) {
   System.out.println("Write ingredient that you would like the recipe to contain.");
+  scanner.nextLine();
   String name = scanner.nextLine();
   SearchForRecipe searchRecipe = new SearchForRecipe();
   searchRecipe.searchIngredient(name);

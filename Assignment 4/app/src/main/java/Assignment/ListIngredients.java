@@ -1,3 +1,4 @@
+package Assignment;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.io.Serializable;
@@ -22,6 +23,16 @@ public class ListIngredients implements Serializable {
   public Ingredient get(int index) {
     return ingredients.get(index);
   }
+
+  public boolean contains(String name){
+    int i = 0;
+    boolean contain = ingredients.get(i).name.equals(name);
+    for(i = 0; i < ingredients.size(); i++){
+        if(contain)
+            break;
+    }
+    return contain;
+}
 
   // Add ingredient and check so name is unique.
   public int addIngredient(Ingredient ingredient) {

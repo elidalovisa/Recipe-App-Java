@@ -1,3 +1,5 @@
+package Assignment;
+
 public class SearchForRecipe {
 // Create search context to search for recipe.
 SearchContext context = new SearchContext();
