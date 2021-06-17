@@ -29,6 +29,7 @@ var savedIngredients = text.readIngredients();
 }
 
   public void searchMaxPrice(int number) {
+    
   }
 }
 

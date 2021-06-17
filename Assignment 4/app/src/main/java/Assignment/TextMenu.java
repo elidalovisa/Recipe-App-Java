@@ -17,7 +17,7 @@ public class TextMenu {
   public void MainMenu() {
     Scanner scanner = new Scanner(System.in);
 
-    var run = true;
+    boolean run = true;
     while (run) {
       System.out.println("______________________");
       System.out.println(" ");
