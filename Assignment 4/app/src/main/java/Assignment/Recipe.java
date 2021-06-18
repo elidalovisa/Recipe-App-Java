@@ -1,4 +1,5 @@
 package Assignment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
@@ -48,7 +49,8 @@ public class Recipe implements Serializable {
   }
 
   public String toString() {
-    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name, portions, ingredients.toString(), comment, instruction, totalCost);
+    return String.format("%s; Portions: %d; Ingredients: %s; Comment: %s; Instructions: %s; totalCost: %d", name,
+        portions, ingredients.toString(), comment, instruction, totalCost);
   }
 
   public void updatePortions(int wantedPortions) {
@@ -56,18 +58,15 @@ public class Recipe implements Serializable {
     int sum = 0;
     ArrayList<Double> baseValueIngredients = new ArrayList<Double>();
 
-    for(int i = 0; i < ingredients.size(); i++) {
+    for (int i = 0; i < ingredients.size(); i++) {
       baseValueIngredients.add(ingredients.get(i).value / oldPortions);
     }
-    for(int j = 0; j < ingredients.size(); j++) {
-      ingredients.get(j).value = baseValueIngredients.get(j)* wantedPortions;
-     if(ingredients.get(j).unit.equals("Pieces")){
-      ingredients.get(j).value = Math.ceil(ingredients.get(j).value);
-      } 
-      System.out.println(ingredients.get(j).baseCost);
-     sum += ingredients.get(j).baseCost * wantedPortions;
-     System.out.println(sum);
-
+    for (int j = 0; j < ingredients.size(); j++) {
+      ingredients.get(j).value = baseValueIngredients.get(j) * wantedPortions;
+      if (ingredients.get(j).unit.equals("Pieces")) {
+        ingredients.get(j).value = Math.ceil(ingredients.get(j).value);
+      }
+      sum += ingredients.get(j).baseCost * ingredients.get(j).value;
     }
     this.portions = wantedPortions;
     this.totalCost = sum;
