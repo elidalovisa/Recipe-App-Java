@@ -201,7 +201,6 @@ public class TextMenu {
         keepAddIngredient = false;
       }
     }
-
     // Calculate total cost for recipe after all ingredients are added.
     recipe.calculatePrice();
     System.out.println("Add instructions");
