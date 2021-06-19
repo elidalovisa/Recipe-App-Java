@@ -21,3 +21,6 @@ Jag ser även nu när applikationen är klar att det har blivit väldigt mycket 
 
 Det har varit en lärorik uppgift och även om jag ser att min kod skulle kunna ha många förbättrigar, så har jag lärt mig väldigt mycket under mitt arbete med den.
 
+## Class diagram
+Mina klassdiagram är numrerade i ordning och det slutliga klassdiagramet heter: ClassDiagram4.png
+
