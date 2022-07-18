@@ -1,3 +1,6 @@
+This application was a project I made as a part of my studies at Linnaeus University.
+
+# The assignment description
 ## The Recipe App
 
 Denna applikation består av en huvudmeny där man kan göra följande val:
